@@ -49,7 +49,12 @@ export const KeyMomentsTab = memo(function KeyMomentsTab({ sessionResult }: KeyM
 
       <View style={styles.audioPlayer}>
         <View style={styles.playButton}>
-          <Image source="sf:play.fill" style={styles.playIcon} tintColor={colors.textInverse} />
+          <Image
+            source="sf:play.fill"
+            style={styles.playIcon}
+            tintColor={colors.textInverse}
+            cachePolicy="memory-disk"
+          />
         </View>
         <View style={styles.progressContainer}>
           <View style={styles.progressBarBackground}>
