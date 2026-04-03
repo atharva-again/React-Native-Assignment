@@ -26,3 +26,9 @@ ios/
 
 # macOS
 .DS_Store
+
+# Sisyphus planning artifacts
+.sisyphus/
+
+# screens
+screens/ 
