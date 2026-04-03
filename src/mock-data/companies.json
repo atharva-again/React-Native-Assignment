@@ -3,5 +3,30 @@
     "id": "1",
     "name": "PhonePe",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/PhonePe_Logo.svg/512px-PhonePe_Logo.svg.png"
+  },
+  {
+    "id": "2",
+    "name": "Amazon",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
+  },
+  {
+    "id": "3",
+    "name": "Google",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_Logo.svg/1024px-Google_Logo.svg.png"
+  },
+  {
+    "id": "4",
+    "name": "Meta",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Meta_Platforms_Inc._logo.svg/1024px-Meta_Platforms_Inc._logo.svg.png"
+  },
+  {
+    "id": "5",
+    "name": "Microsoft",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1024px-Microsoft_logo.svg.png"
+  },
+  {
+    "id": "6",
+    "name": "Uber",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Uber_logo_2018.svg/1024px-Uber_logo_2018.svg.png"
   }
 ]

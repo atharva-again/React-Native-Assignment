@@ -8,5 +8,55 @@
     "text": "API latency is variable & app is sluggish. How do you design UI safely?",
     "durationMinutes": 2,
     "completedTodayCount": 2312
+  },
+  {
+    "id": "q2",
+    "questionNumber": 2,
+    "companyId": "2",
+    "companyName": "Amazon",
+    "companyLogoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png",
+    "text": "Tell me about a time you had a conflict with a teammate. How did you resolve it?",
+    "durationMinutes": 5,
+    "completedTodayCount": 1854
+  },
+  {
+    "id": "q3",
+    "questionNumber": 3,
+    "companyId": "3",
+    "companyName": "Google",
+    "companyLogoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_Logo.svg/1024px-Google_Logo.svg.png",
+    "text": "How would you implement a consistent hash ring for a distributed cache?",
+    "durationMinutes": 10,
+    "completedTodayCount": 943
+  },
+  {
+    "id": "q4",
+    "questionNumber": 4,
+    "companyId": "4",
+    "companyName": "Meta",
+    "companyLogoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Meta_Platforms_Inc._logo.svg/1024px-Meta_Platforms_Inc._logo.svg.png",
+    "text": "Design a system like Instagram stories that handles high write load.",
+    "durationMinutes": 15,
+    "completedTodayCount": 1205
+  },
+  {
+    "id": "q5",
+    "questionNumber": 5,
+    "companyId": "5",
+    "companyName": "Microsoft",
+    "companyLogoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1024px-Microsoft_logo.svg.png",
+    "text": "What is the difference between a process and a thread? When would you use which?",
+    "durationMinutes": 4,
+    "completedTodayCount": 3102
+  },
+  {
+    "id": "q6",
+    "questionNumber": 6,
+    "companyId": "6",
+    "companyName": "Uber",
+    "companyLogoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Uber_logo_2018.svg/1024px-Uber_logo_2018.svg.png",
+    "text": "How would you design a real-time location tracking system for millions of drivers?",
+    "durationMinutes": 12,
+    "completedTodayCount": 765
   }
 ]
