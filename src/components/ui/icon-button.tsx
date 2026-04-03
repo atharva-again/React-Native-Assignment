@@ -7,7 +7,6 @@ export interface IconButtonProps extends TouchableOpacityProps {
   name: keyof typeof Ionicons.glyphMap;
   size?: number;
   color?: string;
-  accessibilityLabel: string;
 }
 
 export function IconButton({
@@ -16,15 +15,12 @@ export function IconButton({
   color = colors.textPrimary,
   disabled,
   style,
-  accessibilityLabel,
   ...props
 }: IconButtonProps) {
   return (
     <TouchableOpacity
       style={[styles.container, disabled && styles.disabled, style]}
       disabled={disabled}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       {...props}
     >

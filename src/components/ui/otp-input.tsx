@@ -112,7 +112,6 @@ export function OtpInput({
             onFocus={() => handleFocus(index)}
             placeholderTextColor={colors.textDisabled}
             textAlign="center"
-            accessibilityLabel={`OTP digit ${index + 1}`}
           />
         );
       })}

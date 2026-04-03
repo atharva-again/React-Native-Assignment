@@ -12,7 +12,6 @@ import {
 import { palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { typography } from "@/theme/typography";
-import { haptics } from "@/utils/haptics";
 
 export interface GradientButtonProps extends TouchableOpacityProps {
   label: string;
@@ -39,13 +38,11 @@ export function GradientButton({
   style,
   disabled,
   onPress,
-  accessibilityLabel,
   ...props
 }: GradientButtonProps) {
   const isSmall = size === "small";
 
   const handlePress = (e: GestureResponderEvent) => {
-    haptics.medium();
     onPress?.(e);
   };
 
@@ -87,9 +84,6 @@ export function GradientButton({
           style={[styles.button, styles.fullWidth]}
           activeOpacity={0.85}
           disabled={disabled}
-          accessibilityRole="button"
-          accessibilityLabel={accessibilityLabel ?? label}
-          accessibilityState={{ disabled: !!disabled }}
           onPress={handlePress}
           {...props}
         >
@@ -104,9 +98,6 @@ export function GradientButton({
       style={buttonStyle}
       activeOpacity={0.85}
       disabled={disabled}
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel ?? label}
-      accessibilityState={{ disabled: !!disabled }}
       onPress={handlePress}
       {...props}
     >

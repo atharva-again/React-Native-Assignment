@@ -86,7 +86,6 @@ export function PhoneInput({
             onFocus?.();
           }}
           onBlur={() => setIsFocused(false)}
-          accessibilityLabel="Mobile number"
         />
       </View>
 

@@ -26,8 +26,6 @@ export function Button({
   size = "medium",
   loading = false,
   disabled,
-  accessibilityLabel,
-  accessibilityState,
   style,
   ...props
 }: ButtonProps) {
@@ -48,13 +46,6 @@ export function Button({
       style={buttonStyles}
       disabled={isActuallyDisabled}
       activeOpacity={0.8}
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel ?? title}
-      accessibilityState={{
-        ...accessibilityState,
-        disabled: isActuallyDisabled,
-        busy: loading,
-      }}
       {...props}
     >
       {loading ? (

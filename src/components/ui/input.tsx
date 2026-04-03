@@ -64,8 +64,6 @@ export function Input({
         ]}
         placeholderTextColor={colors.textDisabled}
         editable={!disabled}
-        accessibilityLabel={props.accessibilityLabel ?? label ?? props.placeholder}
-        accessibilityState={{ disabled: !!disabled }}
         onFocus={handleFocus}
         onBlur={handleBlur}
         {...props}
