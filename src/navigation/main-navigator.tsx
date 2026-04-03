@@ -3,6 +3,7 @@ import { type BottomTabBarProps, createBottomTabNavigator } from "@react-navigat
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { AnimatedScreen, Text as CustomText } from "@/components/ui";
 import { HomeScreen } from "@/features/home/screens/home-screen";
 import { SettingsScreen } from "@/features/settings/screens/settings-screen";
 import type { MainTabParamList } from "@/navigation/types";
@@ -31,9 +32,13 @@ const TabIcon = ({
 };
 
 const StoreTab = () => (
-  <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <Text>Store Tab </Text>
-  </View>
+  <AnimatedScreen>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <CustomText variant="l" weight="medium">
+        Store Tab
+      </CustomText>
+    </View>
+  </AnimatedScreen>
 );
 
 function CustomTabBar({ state, navigation }: BottomTabBarProps) {
@@ -134,6 +139,7 @@ export function MainNavigator() {
   return (
     <Tab.Navigator
       tabBar={(props) => <CustomTabBar {...props} />}
+      detachInactiveScreens={false}
       screenOptions={{
         headerShown: false,
       }}

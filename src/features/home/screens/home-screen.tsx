@@ -4,6 +4,7 @@ import { Image } from "expo-image";
 import { useCallback, useMemo, useState } from "react";
 import { Text as RNText, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AnimatedScreen } from "@/components/ui";
 import { PracticeSetCard } from "@/features/home/components/practice-set-card";
 import { QuestionCard } from "@/features/home/components/question-card";
 import { colors, palette } from "@/theme";
@@ -39,42 +40,48 @@ export function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
-      <View style={styles.header}>
-        <Image
-          source={require("../../../../assets/icon.png")}
-          style={styles.logo}
-          contentFit="contain"
-        />
-        <View style={styles.headerActions}>
-          <TouchableOpacity
-            style={styles.energyPill}
-            activeOpacity={0.7}
-            onPress={handleEnergyPress}
-          >
-            <Ionicons name="flash" size={18} color={palette.white} />
-            <RNText style={styles.energyCount}>8</RNText>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuButton} activeOpacity={0.7} onPress={handleMenuPress}>
-            <Ionicons name="menu" size={24} color={palette.textDark} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <View style={styles.content}>
-        <PracticeSetCard title="Practicing Top 50 Questions for Big Tech Companies" />
-
-        <View style={{ flex: 1 }}>
-          <FlashList
-            data={questions}
-            renderItem={renderItem}
-            keyExtractor={keyExtractor}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContent}
-            // @ts-expect-error - estimatedItemSize is required by FlashList but causing type mismatch in this environment
-            estimatedItemSize={120}
+      <AnimatedScreen>
+        <View style={styles.header}>
+          <Image
+            source={require("../../../../assets/icon.png")}
+            style={styles.logo}
+            contentFit="contain"
           />
+          <View style={styles.headerActions}>
+            <TouchableOpacity
+              style={styles.energyPill}
+              activeOpacity={0.7}
+              onPress={handleEnergyPress}
+            >
+              <Ionicons name="flash" size={18} color={palette.white} />
+              <RNText style={styles.energyCount}>8</RNText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.menuButton}
+              activeOpacity={0.7}
+              onPress={handleMenuPress}
+            >
+              <Ionicons name="menu" size={24} color={palette.textDark} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+
+        <View style={styles.content}>
+          <PracticeSetCard title="Practicing Top 50 Questions for Big Tech Companies" />
+
+          <View style={{ flex: 1 }}>
+            <FlashList
+              data={questions}
+              renderItem={renderItem}
+              keyExtractor={keyExtractor}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.listContent}
+              // @ts-expect-error - estimatedItemSize is required by FlashList but causing type mismatch in this environment
+              estimatedItemSize={120}
+            />
+          </View>
+        </View>
+      </AnimatedScreen>
     </SafeAreaView>
   );
 }

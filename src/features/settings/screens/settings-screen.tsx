@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { GradientButton, IconButton, ScreenContainer, Text } from "@/components/ui";
+import { AnimatedScreen, GradientButton, IconButton, ScreenContainer, Text } from "@/components/ui";
 import { colors, palette, spacing } from "@/theme";
 
 export function SettingsScreen() {
@@ -13,118 +13,128 @@ export function SettingsScreen() {
 
   return (
     <ScreenContainer withPadding={false} style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <IconButton
-          name="chevron-back"
-          size={24}
-          onPress={handleBack}
-          accessibilityLabel="Go back"
-        />
-        <Text variant="xl" weight="semiBold" style={styles.headerTitle}>
-          Your Profile
-        </Text>
-        <View style={styles.headerPlaceholder} />
-      </View>
+      <AnimatedScreen>
+        {/* Header */}
+        <View style={styles.header}>
+          <IconButton
+            name="chevron-back"
+            size={24}
+            onPress={handleBack}
+            accessibilityLabel="Go back"
+          />
+          <Text variant="xl" weight="semiBold" style={styles.headerTitle}>
+            Your Profile
+          </Text>
+          <View style={styles.headerPlaceholder} />
+        </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        {/* Trial Card */}
-        <View style={styles.trialCard}>
-          <View style={styles.trialContent}>
-            <View style={styles.trialTextContainer}>
-              <Text variant="m" weight="medium" color={colors.textInverse}>
-                3 days free trial for
-              </Text>
-              <Text
-                variant="xxxl"
-                weight="bold"
-                color={colors.cardYellow}
-                style={styles.trialPrice}
-              >
-                ₹1
-              </Text>
-              <Text variant="s" color={colors.textInverse} style={styles.trialSubtext}>
-                Then ₹299/month
-              </Text>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {/* Trial Card */}
+          <View style={styles.trialCard}>
+            <View style={styles.trialContent}>
+              <View style={styles.trialTextContainer}>
+                <Text variant="m" weight="medium" color={colors.textInverse}>
+                  3 days free trial for
+                </Text>
+                <Text
+                  variant="xxxl"
+                  weight="bold"
+                  color={colors.cardYellow}
+                  style={styles.trialPrice}
+                >
+                  ₹1
+                </Text>
+                <Text variant="s" color={colors.textInverse} style={styles.trialSubtext}>
+                  Then ₹299/month
+                </Text>
+              </View>
+              <Image
+                source={require("@/../assets/trial_illustration.png")}
+                style={styles.trialImage}
+                resizeMode="contain"
+              />
             </View>
-            <Image
-              source={require("@/../assets/trial_illustration.png")}
-              style={styles.trialImage}
-              resizeMode="contain"
+            <GradientButton
+              label="START 3 DAYS TRIAL @ ₹1"
+              colors={[palette.bannerYellow, palette.cardYellow]}
+              textColor={palette.orange70}
+              fullWidth
+              style={styles.trialButton}
             />
           </View>
-          <GradientButton
-            label="START 3 DAYS TRIAL @ ₹1"
-            colors={[palette.bannerYellow, palette.cardYellow]}
-            textColor={palette.orange70}
-            fullWidth
-            style={styles.trialButton}
-          />
-        </View>
 
-        {/* Update Card */}
-        <View style={styles.updateCard}>
-          <View style={styles.updateLeft}>
-            <View style={styles.updateIconContainer}>
-              <Ionicons name="grid-outline" size={20} color={colors.textPrimary} />
-            </View>
-            <Text variant="m" weight="medium">
-              New update available
-            </Text>
-          </View>
-          <TouchableOpacity style={styles.downloadButton}>
-            <Ionicons name="download-outline" size={20} color={colors.iconGreen} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Info Section */}
-        <View style={styles.infoSection}>
-          <View style={styles.infoRow}>
-            <View style={styles.infoLabelContainer}>
-              <Ionicons name="call-outline" size={20} color={colors.textSecondary} />
-              <Text variant="m" style={styles.infoLabel}>
-                Phone number
+          {/* Update Card */}
+          <View style={styles.updateCard}>
+            <View style={styles.updateLeft}>
+              <View style={styles.updateIconContainer}>
+                <Ionicons name="grid-outline" size={20} color={colors.textPrimary} />
+              </View>
+              <Text variant="m" weight="medium">
+                New update available
               </Text>
             </View>
-            <Text variant="m" color={colors.textSecondary}>
-              +91 9608184703
-            </Text>
+            <TouchableOpacity style={styles.downloadButton}>
+              <Ionicons name="download-outline" size={20} color={colors.iconGreen} />
+            </TouchableOpacity>
           </View>
-          <View style={styles.divider} />
-          <View style={styles.infoRow}>
-            <View style={styles.infoLabelContainer}>
-              <Ionicons name="add-circle-outline" size={20} color={colors.textSecondary} />
-              <Text variant="m" style={styles.infoLabel}>
-                Learning since
+
+          {/* Info Section */}
+          <View style={styles.infoSection}>
+            <View style={styles.infoRow}>
+              <View style={styles.infoLabelContainer}>
+                <Ionicons name="call-outline" size={20} color={colors.textSecondary} />
+                <Text variant="m" style={styles.infoLabel}>
+                  Phone number
+                </Text>
+              </View>
+              <Text variant="m" color={colors.textSecondary}>
+                +91 9608184703
               </Text>
             </View>
-            <Text variant="m" color={colors.textSecondary}>
-              August 17, 2025
+            <View style={styles.divider} />
+            <View style={styles.infoRow}>
+              <View style={styles.infoLabelContainer}>
+                <Ionicons name="add-circle-outline" size={20} color={colors.textSecondary} />
+                <Text variant="m" style={styles.infoLabel}>
+                  Learning since
+                </Text>
+              </View>
+              <Text variant="m" color={colors.textSecondary}>
+                August 17, 2025
+              </Text>
+            </View>
+          </View>
+
+          {/* Menu Section */}
+          <View style={styles.menuSection}>
+            <MenuItem icon="chatbubble-outline" title="Chat with us" />
+            <View style={styles.divider} />
+            <MenuItem icon="share-outline" title="Share the app" />
+            <View style={styles.divider} />
+            <MenuItem icon="star-outline" title="Rate the app" />
+            <View style={styles.divider} />
+            <MenuItem icon="log-out-outline" title="Log out" />
+          </View>
+
+          {/* Footer */}
+          <View style={styles.footer}>
+            <Text variant="s" color={colors.textDisabled} align="center">
+              App version v2.14.2
+            </Text>
+            <Text
+              variant="s"
+              color={colors.textDisabled}
+              align="center"
+              style={styles.footerBottom}
+            >
+              Made with ❤️ from India
             </Text>
           </View>
-        </View>
-
-        {/* Menu Section */}
-        <View style={styles.menuSection}>
-          <MenuItem icon="chatbubble-outline" title="Chat with us" />
-          <View style={styles.divider} />
-          <MenuItem icon="share-outline" title="Share the app" />
-          <View style={styles.divider} />
-          <MenuItem icon="star-outline" title="Rate the app" />
-          <View style={styles.divider} />
-          <MenuItem icon="log-out-outline" title="Log out" />
-        </View>
-
-        {/* Footer */}
-        <View style={styles.footer}>
-          <Text variant="s" color={colors.textDisabled} align="center">
-            App version v2.14.2
-          </Text>
-          <Text variant="s" color={colors.textDisabled} align="center" style={styles.footerBottom}>
-            Made with ❤️ from India
-          </Text>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </AnimatedScreen>
     </ScreenContainer>
   );
 }

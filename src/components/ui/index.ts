@@ -1,3 +1,4 @@
+export * from "./animated-screen";
 export * from "./button";
 export * from "./gradient-button";
 export * from "./icon-button";
