@@ -9,7 +9,6 @@ import { QuestionCard } from "@/features/home/components/question-card";
 import { colors, palette } from "@/theme";
 import { spacing } from "@/theme/spacing";
 import type { Question } from "@/types";
-import { haptics } from "@/utils/haptics";
 import { loadQuestions } from "@/utils/mock-data";
 
 export function HomeScreen() {
@@ -20,13 +19,9 @@ export function HomeScreen() {
     setSelectedQuestionId((current) => (current === question.id ? null : question.id));
   }, []);
 
-  const handleEnergyPress = () => {
-    haptics.light();
-  };
+  const handleEnergyPress = () => {};
 
-  const handleMenuPress = () => {
-    haptics.light();
-  };
+  const handleMenuPress = () => {};
 
   const renderItem = useCallback(
     ({ item, index }: { item: Question; index: number }) => (
@@ -55,21 +50,11 @@ export function HomeScreen() {
             style={styles.energyPill}
             activeOpacity={0.7}
             onPress={handleEnergyPress}
-            accessibilityRole="button"
-            accessibilityLabel="Energy balance: 8"
-            accessibilityHint="View your current energy balance"
           >
             <Ionicons name="flash" size={18} color={palette.white} />
             <RNText style={styles.energyCount}>8</RNText>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuButton}
-            activeOpacity={0.7}
-            onPress={handleMenuPress}
-            accessibilityRole="button"
-            accessibilityLabel="Main menu"
-            accessibilityHint="Open the side navigation menu"
-          >
+          <TouchableOpacity style={styles.menuButton} activeOpacity={0.7} onPress={handleMenuPress}>
             <Ionicons name="menu" size={24} color={palette.textDark} />
           </TouchableOpacity>
         </View>
@@ -85,6 +70,7 @@ export function HomeScreen() {
             keyExtractor={keyExtractor}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listContent}
+            // @ts-expect-error - estimatedItemSize is required by FlashList but causing type mismatch in this environment
             estimatedItemSize={120}
           />
         </View>

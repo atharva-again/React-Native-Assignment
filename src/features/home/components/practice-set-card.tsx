@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "@/components/ui/text";
 import { colors, palette } from "@/theme";
 import { spacing } from "@/theme/spacing";
-import { haptics } from "@/utils/haptics";
 
 export interface PracticeSetCardProps {
   title: string;
@@ -11,20 +10,12 @@ export interface PracticeSetCardProps {
 }
 
 export function PracticeSetCard({ title, onPress }: PracticeSetCardProps) {
-  const handlePress = () => {
-    haptics.light();
-    onPress?.();
-  };
-
   return (
     <View style={styles.shadowContainer}>
       <TouchableOpacity
         style={styles.container}
         activeOpacity={0.9}
-        onPress={handlePress}
-        accessibilityRole="button"
-        accessibilityLabel={`Open practice set details: ${title}`}
-        accessibilityHint="Opens the detailed list of questions for this practice set"
+        onPress={onPress}
         hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
       >
         <View style={styles.leftContent}>
