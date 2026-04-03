@@ -160,7 +160,7 @@ function MenuItem({ icon, title }: MenuItemProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F9F9F9",
+    backgroundColor: colors.surfaceMuted,
   },
   header: {
     flexDirection: "row",
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxxl,
   },
   trialCard: {
-    backgroundColor: "#1A1A1A",
+    backgroundColor: colors.textDarkAlt,
     borderRadius: 24,
     padding: spacing.l,
     marginBottom: spacing.m,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     padding: spacing.m,
     borderRadius: spacing.cardRadius,
     borderWidth: 1,
-    borderColor: "#F0F0F0",
+    borderColor: colors.surfaceBorder,
     marginBottom: spacing.m,
   },
   updateLeft: {
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: "#E8F5E9",
+    backgroundColor: colors.surfaceSuccessTint,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.white,
     borderRadius: spacing.cardRadius,
     borderWidth: 1,
-    borderColor: "#F0F0F0",
+    borderColor: colors.surfaceBorder,
     paddingHorizontal: spacing.m,
     marginBottom: spacing.m,
   },
@@ -270,13 +270,13 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: colors.surfaceDivider,
   },
   menuSection: {
     backgroundColor: palette.white,
     borderRadius: spacing.cardRadius,
     borderWidth: 1,
-    borderColor: "#F0F0F0",
+    borderColor: colors.surfaceBorder,
     paddingHorizontal: spacing.m,
     marginBottom: spacing.xxl,
   },

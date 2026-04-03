@@ -1,24 +1,19 @@
 import { useCallback } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View, Text as RNText } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { GradientButton, Text } from "@/components/ui";
+import { AuthScreenLayout, GradientButton, Text } from "@/components/ui";
 import type { AuthStackScreenProps } from "@/navigation/types";
 import { colors, spacing, typography } from "@/theme";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 function WelcomeScreen({ navigation }: AuthStackScreenProps<"Welcome">) {
-  const insets = useSafeAreaInsets();
-
   const handleContinue = useCallback(() => {
     navigation.navigate("Login");
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
-      <View style={{ height: Math.max(insets.top, spacing.m) }} />
-
+    <AuthScreenLayout>
       <View style={styles.logoRow}>
         <Animated.Image
           source={require("../../../../assets/icon.png")}
@@ -45,7 +40,7 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<"Welcome">) {
       >
         <Text style={styles.headline}>
           Practice Top Interview{"\n"}
-          Questions <Text style={{ color: colors.primary }}>with AI</Text>
+          Questions <RNText style={{ color: colors.primary }}>with AI</RNText>
         </Text>
       </Animated.View>
 
@@ -67,17 +62,11 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<"Welcome">) {
           <Text style={styles.legalLink}>privacy policy</Text>
         </Text>
       </Animated.View>
-
-      <View style={{ height: Math.max(insets.bottom, spacing.m) }} />
-    </View>
+    </AuthScreenLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   logoRow: {
     alignItems: "center",
     justifyContent: "center",

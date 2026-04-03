@@ -9,7 +9,7 @@ import {
   type TouchableOpacityProps,
   View,
 } from "react-native";
-import { palette } from "@/theme/colors";
+import { colors, palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { typography } from "@/theme/typography";
 
@@ -28,7 +28,7 @@ export interface GradientButtonProps extends TouchableOpacityProps {
 export function GradientButton({
   label,
   iconName,
-  colors: gradientColors = ["#FF7800", "#FF5000"],
+  colors: gradientColors = [palette.orange40, palette.orange50],
   textColor = palette.white,
   fullWidth = false,
   size = "large",
@@ -65,7 +65,8 @@ export function GradientButton({
     fullWidth && styles.fullWidth,
     {
       shadowColor:
-        shadowColor ?? (gradientColors[0] === palette.white ? "transparent" : palette.orange70),
+        shadowColor ??
+        (gradientColors[0] === palette.white ? colors.overlayWhite25 : palette.orange70),
     },
     style,
   ];

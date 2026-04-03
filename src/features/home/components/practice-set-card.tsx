@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.05)",
+    borderColor: colors.overlayBlack5,
   },
   leftContent: {
     flexDirection: "row",

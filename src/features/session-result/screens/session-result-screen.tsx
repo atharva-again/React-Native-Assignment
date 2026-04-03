@@ -4,10 +4,10 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text } from "@/components/ui/text";
-import sessionResultData from "@/mock-data/session-result.json";
 import type { RootStackParamList } from "@/navigation/types";
 import { colors, palette, spacing } from "@/theme";
 import type { SessionResult } from "@/types";
+import { loadSessionResult } from "@/utils/mock-data";
 import { KeyMomentsTab } from "../components/key-moments-tab";
 import { SessionHeader } from "../components/session-header";
 import { SmartSummaryTab } from "../components/smart-summary-tab";
@@ -20,7 +20,7 @@ export function SessionResultScreen({
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<TabType>("summary");
 
-  const sessionResult = sessionResultData as SessionResult;
+  const sessionResult: SessionResult = loadSessionResult();
 
   const handleClose = () => {
     navigation.goBack();

@@ -88,13 +88,7 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
 
           <View style={styles.buttonContainer}>
             <Button title="FEEDBACK" onPress={handleFeedbackPress} style={styles.button} />
-            <Button
-              title="AI VS AI (LISTEN)"
-              variant="disabled"
-              disabled
-              onPress={() => {}}
-              style={styles.button}
-            />
+            <Button title="AI VS AI (LISTEN)" variant="disabled" disabled style={styles.button} />
           </View>
 
           <Text variant="xs" align="center" color={colors.textSecondary} style={styles.socialProof}>

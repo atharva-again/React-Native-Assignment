@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Modal, Platform, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
-import { typography } from "@/theme/typography";
+import { formFieldStyles, getFieldBorderColor } from "./form-field";
 import { Text } from "./text";
 
 const COUNTRY_CODES = [
@@ -40,16 +40,10 @@ export function PhoneInput({
 
   const selected = COUNTRY_CODES.find((c) => c.code === selectedCountryCode) ?? COUNTRY_CODES[0];
 
-  const getBorderColor = () => {
-    if (error) return colors.error;
-    if (isFocused) return colors.borderFocused;
-    return colors.border;
-  };
-
   return (
     <>
       {label && (
-        <Text variant="s" weight="medium" style={styles.label}>
+        <Text variant="s" weight="medium" style={formFieldStyles.label}>
           {label}
         </Text>
       )}
@@ -57,7 +51,7 @@ export function PhoneInput({
         style={[
           styles.container,
           {
-            borderColor: getBorderColor(),
+            borderColor: getFieldBorderColor(error, isFocused),
           },
         ]}
       >
@@ -90,7 +84,7 @@ export function PhoneInput({
       </View>
 
       {error && errorText && (
-        <Text variant="xs" color={colors.error} style={styles.errorText}>
+        <Text variant="xs" color={colors.error} style={formFieldStyles.errorText}>
           {errorText}
         </Text>
       )}
@@ -133,9 +127,6 @@ export function PhoneInput({
 }
 
 const styles = StyleSheet.create({
-  label: {
-    marginBottom: spacing.xxs,
-  },
   container: {
     flexDirection: "row",
     alignItems: "center",
@@ -160,18 +151,14 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    paddingHorizontal: spacing.m,
+    ...formFieldStyles.inputBase,
     paddingVertical: Platform.OS === "ios" ? spacing.m : spacing.s,
-    fontSize: typography.sizes.m,
-    fontFamily: typography.fonts.inter.normal,
+    borderWidth: 0,
     color: colors.textPrimary,
-  },
-  errorText: {
-    marginTop: spacing.xxs,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.3)",
+    backgroundColor: colors.overlayBlack30,
     justifyContent: "center",
     alignItems: "center",
   },

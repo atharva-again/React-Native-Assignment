@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Platform, StyleSheet, TextInput, type TextInputProps, View } from "react-native";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
-import { typography } from "@/theme/typography";
+import { formFieldStyles, getFieldBorderColor } from "./form-field";
 import { Text } from "./text";
 
 export interface InputProps extends TextInputProps {
@@ -34,12 +34,6 @@ export function Input({
     onBlur?.(e);
   };
 
-  const getBorderColor = () => {
-    if (error) return colors.error;
-    if (isFocused) return colors.borderFocused;
-    return colors.border;
-  };
-
   return (
     <View style={styles.container}>
       {label && (
@@ -47,7 +41,7 @@ export function Input({
           variant="s"
           weight="medium"
           color={disabled ? colors.textDisabled : colors.textPrimary}
-          style={styles.label}
+          style={formFieldStyles.label}
         >
           {label}
         </Text>
@@ -56,7 +50,7 @@ export function Input({
         style={[
           styles.input,
           {
-            borderColor: getBorderColor(),
+            borderColor: getFieldBorderColor(error, isFocused),
             color: disabled ? colors.textDisabled : colors.textPrimary,
             backgroundColor: disabled ? colors.backgroundSecondary : colors.background,
           },
@@ -69,7 +63,7 @@ export function Input({
         {...props}
       />
       {error && errorText && (
-        <Text variant="xs" color={colors.error} style={styles.errorText}>
+        <Text variant="xs" color={colors.error} style={formFieldStyles.errorText}>
           {errorText}
         </Text>
       )}
@@ -82,18 +76,8 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: spacing.xs,
   },
-  label: {
-    marginBottom: spacing.xxs,
-  },
   input: {
-    borderWidth: 1,
-    borderRadius: spacing.inputRadius,
-    paddingHorizontal: spacing.m,
+    ...formFieldStyles.inputBase,
     paddingVertical: Platform.OS === "ios" ? spacing.m : spacing.s,
-    fontSize: typography.sizes.m,
-    fontFamily: typography.fonts.inter.normal,
-  },
-  errorText: {
-    marginTop: spacing.xxs,
   },
 });

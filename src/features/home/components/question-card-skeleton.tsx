@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import { Skeleton } from "@/components/ui/skeleton";
-import { colors } from "@/theme/colors";
+import { SkeletonCard } from "@/components/ui/skeleton-card";
 import { spacing } from "@/theme/spacing";
 
 export function QuestionCardSkeleton() {
   return (
-    <View style={styles.container}>
+    <SkeletonCard style={styles.container}>
       <View style={styles.header}>
         <View style={styles.companyInfo}>
           <Skeleton width={24} height={24} borderRadius={4} style={styles.logo} />
@@ -20,18 +20,13 @@ export function QuestionCardSkeleton() {
       <View style={styles.footer}>
         <Skeleton width={150} height={14} borderRadius={4} />
       </View>
-    </View>
+    </SkeletonCard>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.cardBackground,
-    borderRadius: spacing.cardRadius,
-    padding: spacing.m,
     marginBottom: spacing.m,
-    borderWidth: 1,
-    borderColor: colors.border,
   },
   header: {
     flexDirection: "row",

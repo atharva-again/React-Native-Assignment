@@ -1,5 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonCard } from "@/components/ui/skeleton-card";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 
@@ -16,13 +17,13 @@ export function SessionHeaderSkeleton() {
         />
       </View>
 
-      <View style={styles.card}>
+      <SkeletonCard style={styles.card}>
         <View style={styles.cardHeader}>
           <Skeleton width={80} height={16} borderRadius={4} />
         </View>
         <Skeleton width="100%" height={20} borderRadius={4} style={styles.textLine} />
         <Skeleton width="80%" height={20} borderRadius={4} />
-      </View>
+      </SkeletonCard>
     </View>
   );
 }
@@ -45,12 +46,7 @@ const styles = StyleSheet.create({
     marginLeft: -20,
   },
   card: {
-    backgroundColor: colors.cardBackground,
-    borderRadius: spacing.cardRadius,
-    padding: spacing.m,
     width: "100%",
-    borderWidth: 1,
-    borderColor: colors.border,
   },
   cardHeader: {
     flexDirection: "row",

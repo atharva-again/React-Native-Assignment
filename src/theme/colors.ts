@@ -48,6 +48,22 @@ export const palette = {
   iconBlueLight: "#E5F2FF",
   iconBlueBorder: "#B2D9FF",
   textDark: "#2C2C2E",
+  textDarkAlt: "#1A1A1A",
+
+  surfaceMuted: "#F9F9F9",
+  surfaceBorder: "#F0F0F0",
+  surfaceDivider: "#F5F5F5",
+  surfaceSuccessTint: "#E8F5E9",
+  tabRingBlue: "#A0D8FF",
+  tabInnerBlue: "#E0F2FF",
+  tabStoreIcon: "#1A2B3C",
+  olive70: "#4B4B1E",
+  olive90: "#2A2A0A",
+  gold60: "#E0C000",
+  bannerYellowStrong: "#FFDD00",
+  overlayBlack30: "rgba(0, 0, 0, 0.3)",
+  overlayBlack5: "rgba(0, 0, 0, 0.05)",
+  overlayWhite25: "rgba(255, 255, 255, 0.25)",
 
   // Utility
   white: "#FFFFFF",
@@ -74,6 +90,7 @@ export const colors = {
   textInverse: palette.white,
   textLink: palette.orange50,
   textDark: palette.textDark,
+  textDarkAlt: palette.textDarkAlt,
 
   // Border
   border: palette.gray30,
@@ -108,6 +125,22 @@ export const colors = {
   iconBlue: palette.iconBlue,
   iconBlueLight: palette.iconBlueLight,
   iconBlueBorder: palette.iconBlueBorder,
+
+  surfaceMuted: palette.surfaceMuted,
+  surfaceBorder: palette.surfaceBorder,
+  surfaceDivider: palette.surfaceDivider,
+  surfaceSuccessTint: palette.surfaceSuccessTint,
+
+  tabRingBlue: palette.tabRingBlue,
+  tabInnerBlue: palette.tabInnerBlue,
+  tabStoreIcon: palette.tabStoreIcon,
+  olive70: palette.olive70,
+  olive90: palette.olive90,
+  gold60: palette.gold60,
+  bannerYellowStrong: palette.bannerYellowStrong,
+  overlayBlack30: palette.overlayBlack30,
+  overlayBlack5: palette.overlayBlack5,
+  overlayWhite25: palette.overlayWhite25,
 } as const;
 
 export type Colors = typeof colors;

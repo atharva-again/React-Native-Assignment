@@ -20,10 +20,6 @@ export function HomeScreen() {
     setSelectedQuestionId((current) => (current === question.id ? null : question.id));
   }, []);
 
-  const handleEnergyPress = () => {};
-
-  const handleMenuPress = () => {};
-
   const renderItem = useCallback(
     ({ item, index }: { item: Question; index: number }) => (
       <QuestionCard
@@ -48,19 +44,11 @@ export function HomeScreen() {
             contentFit="contain"
           />
           <View style={styles.headerActions}>
-            <TouchableOpacity
-              style={styles.energyPill}
-              activeOpacity={0.7}
-              onPress={handleEnergyPress}
-            >
+            <TouchableOpacity style={styles.energyPill} activeOpacity={0.7} disabled>
               <Ionicons name="flash" size={18} color={palette.white} />
               <RNText style={styles.energyCount}>8</RNText>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuButton}
-              activeOpacity={0.7}
-              onPress={handleMenuPress}
-            >
+            <TouchableOpacity style={styles.menuButton} activeOpacity={0.7} disabled>
               <Ionicons name="menu" size={24} color={palette.textDark} />
             </TouchableOpacity>
           </View>
@@ -76,8 +64,6 @@ export function HomeScreen() {
               keyExtractor={keyExtractor}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.listContent}
-              // @ts-expect-error - estimatedItemSize is required by FlashList but causing type mismatch in this environment
-              estimatedItemSize={120}
             />
           </View>
         </View>

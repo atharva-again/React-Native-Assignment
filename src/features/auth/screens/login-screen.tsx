@@ -6,8 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { GradientButton, OtpInput, PhoneInput, Text } from "@/components/ui";
+import { AuthScreenLayout, GradientButton, OtpInput, PhoneInput, Text } from "@/components/ui";
 import type { AuthStackScreenProps } from "@/navigation/types";
 import { colors, spacing, typography } from "@/theme";
 
@@ -17,7 +16,6 @@ const OTP_LENGTH = 6;
 type ButtonState = "get-otp" | "otp-sent" | "continue";
 
 function LoginScreen({ navigation }: AuthStackScreenProps<"Login">) {
-  const insets = useSafeAreaInsets();
   const otpRef = useRef<{ blur: () => void }>(null);
 
   const [phone, setPhone] = useState("");
@@ -101,9 +99,7 @@ function LoginScreen({ navigation }: AuthStackScreenProps<"Login">) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <View style={{ height: Math.max(insets.top, spacing.m) }} />
-
+      <AuthScreenLayout>
         <View style={styles.topSpacer} />
 
         <View style={styles.content}>
@@ -169,18 +165,12 @@ function LoginScreen({ navigation }: AuthStackScreenProps<"Login">) {
             style={isButtonDisabled && styles.buttonDisabled}
           />
         </View>
-
-        <View style={{ height: Math.max(insets.bottom, spacing.m) }} />
-      </View>
+      </AuthScreenLayout>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   content: {
     flex: 1,
     paddingHorizontal: spacing.screenPadding,

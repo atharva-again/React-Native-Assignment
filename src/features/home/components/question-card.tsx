@@ -178,7 +178,7 @@ export const QuestionCard = memo(function QuestionCard({
               label="FEEDBACK"
               colors={[palette.white, palette.white]}
               textColor={palette.iconGreen}
-              bottomShadowColor="#E0C000"
+              bottomShadowColor={colors.gold60}
               shadowHeight={4}
               size="small"
               fullWidth
@@ -188,9 +188,9 @@ export const QuestionCard = memo(function QuestionCard({
 
             <GradientButton
               label="AI VS AI (LISTEN)"
-              colors={["#4B4B1E", "#4B4B1E"]}
+              colors={[colors.olive70, colors.olive70]}
               textColor={palette.white}
-              bottomShadowColor="#2A2A0A"
+              bottomShadowColor={colors.olive90}
               shadowHeight={4}
               iconName="headset"
               size="small"
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -50,
     bottom: -50,
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    backgroundColor: colors.overlayWhite25,
     transform: [{ rotate: "45deg" }],
   },
   numberText: {
@@ -344,13 +344,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 14,
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
-    borderBottomColor: "#FFDD00",
+    borderBottomColor: colors.bannerYellowStrong,
   },
   expandedContent: {
-    backgroundColor: "#FFDD00",
+    backgroundColor: colors.bannerYellowStrong,
     borderRadius: 20,
     padding: spacing.m,
-    shadowColor: "#000",
+    shadowColor: palette.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,

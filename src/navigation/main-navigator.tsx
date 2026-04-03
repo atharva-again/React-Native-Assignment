@@ -124,7 +124,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
             <View style={styles.storeOuterRing}>
               {/* Inner Circle (the button itself) */}
               <View style={styles.storeInnerCircle}>
-                <Ionicons name="bag-handle" size={24} color="#1A2B3C" />
+                <Ionicons name="bag-handle" size={24} color={colors.tabStoreIcon} />
                 <Text style={styles.storeLabelInside}>Store</Text>
               </View>
             </View>
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   mainOuterPill: {
-    backgroundColor: "#E5E7EB",
+    backgroundColor: palette.gray30,
     borderRadius: 40,
     height: 78,
     alignItems: "center",
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     width: 78,
     height: 78,
     borderRadius: 39,
-    backgroundColor: "#A0D8FF",
+    backgroundColor: colors.tabRingBlue,
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 1,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: "#E0F2FF",
+    backgroundColor: colors.tabInnerBlue,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -215,6 +215,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 1,
     fontWeight: "600",
-    color: "#374151",
+    color: palette.gray80,
   },
 });
