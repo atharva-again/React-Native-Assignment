@@ -23,7 +23,7 @@ const BulletList = memo(({ items, emptyMessage }: { items: string[]; emptyMessag
     <View style={styles.listContainer}>
       {items.map((item, index) => (
         <Animated.View
-          key={index}
+          key={item}
           style={styles.bulletItem}
           entering={FadeInDown.delay(index * 100 + 400).duration(400)}
         >
