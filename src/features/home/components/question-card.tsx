@@ -43,6 +43,8 @@ export const QuestionCard = memo(function QuestionCard({
             style={styles.logo}
             contentFit="contain"
             cachePolicy="memory-disk"
+            transition={200}
+            recyclingKey={question.companyLogoUrl}
             accessibilityLabel={`${question.companyName} logo`}
           />
           <Text variant="s" weight="medium" color={colors.textSecondary}>
