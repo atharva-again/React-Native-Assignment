@@ -14,7 +14,7 @@ export function RootNavigator() {
       <Stack.Screen
         name="SessionResult"
         component={SessionResultScreen}
-        options={{ presentation: "modal", headerShown: true }}
+        options={{ presentation: "modal", headerShown: false }}
       />
     </Stack.Navigator>
   );

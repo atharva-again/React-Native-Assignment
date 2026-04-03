@@ -3,8 +3,8 @@
     "id": "q1",
     "questionNumber": 1,
     "companyId": "1",
-    "companyName": "PhonePe",
-    "companyLogoUrl": "https://img.icons8.com/color/512/phonepe.png",
+    "companyName": "NVIDIA",
+    "companyLogoUrl": "https://upload.wikimedia.org/wikipedia/sco/2/21/Nvidia_logo.svg",
     "text": "API latency is variable & app is sluggish. How do you design UI safely?",
     "durationMinutes": 2,
     "completedTodayCount": 2312

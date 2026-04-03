@@ -1,48 +1,75 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Text } from "@/components/ui/text";
-import { colors } from "@/theme/colors";
+import { colors, palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import type { SessionResult } from "@/types";
 
 export interface SessionHeaderProps {
   sessionResult: SessionResult;
+  onClose?: () => void;
 }
 
-export function SessionHeader({ sessionResult }: SessionHeaderProps) {
+export function SessionHeader({ sessionResult, onClose }: SessionHeaderProps) {
+  const insets = useSafeAreaInsets();
+
+  const handleClose = () => {
+    onClose?.();
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top + spacing.m }]}>
+      <TouchableOpacity
+        style={[styles.closeButton, { top: insets.top + spacing.xs }]}
+        onPress={handleClose}
+      >
+        <View style={styles.closeIconWrapper}>
+          <Ionicons name="close" size={24} color={colors.textPrimary} />
+        </View>
+      </TouchableOpacity>
+
       <View style={styles.avatarsContainer}>
         <Image
-          source={{ uri: "https://i.pravatar.cc/150?img=32" }}
+          source={require("@/../assets/avatar1.png")}
           style={styles.avatar}
           cachePolicy="memory-disk"
           transition={200}
-          accessibilityLabel="Coach avatar"
         />
         <Image
-          source={{ uri: "https://i.pravatar.cc/150?img=44" }}
+          source={require("@/../assets/avatar2.png")}
           style={[styles.avatar, styles.avatarOverlap]}
           cachePolicy="memory-disk"
           transition={200}
-          accessibilityLabel="Your avatar"
         />
       </View>
 
+      <View style={styles.triangle} />
+
       <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Image
-            source={{ uri: sessionResult.companyLogoUrl }}
-            style={styles.companyLogo}
-            cachePolicy="memory-disk"
-          />
-          <Text variant="s" weight="medium" color={colors.textSecondary}>
-            {sessionResult.companyName}
-          </Text>
-        </View>
-        <Text variant="m" weight="semiBold" numberOfLines={2}>
+        <Text
+          variant="m"
+          weight="semiBold"
+          color={colors.textInverse}
+          align="center"
+          style={styles.questionText}
+        >
           {sessionResult.questionText}
         </Text>
+
+        <View style={styles.cardFooter}>
+          <View style={styles.companyLogoWrapper}>
+            <Image
+              source={{ uri: sessionResult.companyLogoUrl }}
+              style={styles.companyLogo}
+              cachePolicy="memory-disk"
+            />
+          </View>
+          <Text weight="medium" color={colors.textInverse} style={styles.footerText}>
+            Asked by {sessionResult.companyName}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -50,42 +77,88 @@ export function SessionHeader({ sessionResult }: SessionHeaderProps) {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.backgroundFeedback,
     paddingHorizontal: spacing.screenPadding,
     alignItems: "center",
-    paddingVertical: spacing.l,
+    paddingBottom: spacing.xl,
+  },
+  closeButton: {
+    position: "absolute",
+    right: spacing.screenPadding,
+    zIndex: 10,
+  },
+  closeIconWrapper: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: palette.green30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   avatarsContainer: {
     flexDirection: "row",
-    marginBottom: spacing.l,
+    marginBottom: spacing.xs,
   },
   avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    borderWidth: 2,
-    borderColor: colors.background,
-    backgroundColor: colors.border,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
   },
   avatarOverlap: {
     marginLeft: -20,
   },
-  card: {
-    backgroundColor: colors.cardBackground,
-    borderRadius: spacing.cardRadius,
-    padding: spacing.m,
-    width: "100%",
-    borderWidth: 1,
-    borderColor: colors.border,
+  triangle: {
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderBottomWidth: 10,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: colors.success, // palette.green50
+    transform: [{ rotate: "0deg" }],
+    zIndex: 1,
+    marginBottom: -1,
   },
-  cardHeader: {
+  card: {
+    backgroundColor: colors.success, // palette.green50
+    borderRadius: 20,
+    paddingVertical: spacing.m,
+    paddingHorizontal: spacing.l,
+    width: "100%",
+    shadowColor: palette.black,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  questionText: {
+    alignSelf: "stretch",
+    lineHeight: 22,
+    marginBottom: spacing.s,
+  },
+  cardFooter: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: spacing.xs,
+    justifyContent: "center",
     gap: spacing.xs,
   },
+  companyLogoWrapper: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: palette.white,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+  },
   companyLogo: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
+    width: 16,
+    height: 16,
+  },
+  footerText: {
+    fontSize: 12,
   },
 });

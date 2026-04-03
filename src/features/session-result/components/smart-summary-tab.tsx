@@ -1,7 +1,8 @@
 import { memo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { Text } from "@/components/ui/text";
-import { colors } from "@/theme/colors";
+import { colors, palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import type { SessionResult } from "@/types";
 
@@ -21,13 +22,18 @@ const BulletList = memo(({ items, emptyMessage }: { items: string[]; emptyMessag
   return (
     <View style={styles.listContainer}>
       {items.map((item, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: items are static strings
-        <View key={index} style={styles.bulletItem}>
-          <View style={styles.bulletMarker} />
-          <Text variant="m" style={styles.bulletText}>
+        <Animated.View
+          key={index}
+          style={styles.bulletItem}
+          entering={FadeInDown.delay(index * 100 + 400).duration(400)}
+        >
+          <View style={styles.diamondWrapper}>
+            <View style={styles.diamond} />
+          </View>
+          <Text variant="m" color={palette.gray70} style={styles.bulletText}>
             {item}
           </Text>
-        </View>
+        </Animated.View>
       ))}
     </View>
   );
@@ -39,13 +45,13 @@ export const SmartSummaryTab = memo(function SmartSummaryTab({
   const { whatWorkedWell, overallTakeaways } = sessionResult.smartSummary;
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text variant="l" weight="bold" style={styles.title}>
-        Smart Summary
-      </Text>
-
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.section}>
-        <Text variant="m" weight="semiBold" style={styles.sectionTitle}>
+        <Text variant="l" weight="semiBold" color={palette.gray80} style={styles.sectionTitle}>
           What worked well
         </Text>
         <BulletList
@@ -55,7 +61,7 @@ export const SmartSummaryTab = memo(function SmartSummaryTab({
       </View>
 
       <View style={styles.section}>
-        <Text variant="m" weight="semiBold" style={styles.sectionTitle}>
+        <Text variant="l" weight="semiBold" color={palette.gray80} style={styles.sectionTitle}>
           Overall takeaways
         </Text>
         <BulletList
@@ -70,15 +76,14 @@ export const SmartSummaryTab = memo(function SmartSummaryTab({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.background,
   },
   content: {
     padding: spacing.screenPadding,
-  },
-  title: {
-    marginBottom: spacing.l,
+    paddingTop: spacing.l,
   },
   section: {
-    marginBottom: spacing.xl,
+    marginBottom: spacing.xxl,
   },
   sectionTitle: {
     marginBottom: spacing.m,
@@ -89,20 +94,27 @@ const styles = StyleSheet.create({
   bulletItem: {
     flexDirection: "row",
     alignItems: "flex-start",
+    marginBottom: spacing.xs,
   },
-  bulletMarker: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: colors.primary,
-    marginTop: 8,
-    marginRight: spacing.s,
+  diamondWrapper: {
+    width: 14,
+    height: 22, // Match bulletText lineHeight exactly
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  diamond: {
+    width: 5,
+    height: 5,
+    backgroundColor: palette.gray40,
+    transform: [{ rotate: "45deg" }],
   },
   bulletText: {
     flex: 1,
     lineHeight: 22,
+    paddingLeft: spacing.xxs,
   },
   emptyText: {
     fontStyle: "italic",
+    paddingLeft: spacing.m,
   },
 });

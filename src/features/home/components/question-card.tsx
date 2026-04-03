@@ -2,7 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image } from "expo-image";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { memo, useCallback, useMemo } from "react";
+import { type DimensionValue, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { Text } from "@/components/ui/text";
@@ -10,7 +11,6 @@ import type { RootStackParamList } from "@/navigation/types";
 import { colors, palette } from "@/theme";
 import { spacing } from "@/theme/spacing";
 import type { Question } from "@/types";
-import { haptics } from "@/utils/haptics";
 
 export interface QuestionCardProps {
   question: Question;
@@ -20,17 +20,13 @@ export interface QuestionCardProps {
 }
 
 const ReflectionStrips = () => (
-  <View
-    style={StyleSheet.absoluteFill}
-    pointerEvents="none"
-    importantForAccessibility="no-hide-descendants"
-  >
+  <View style={StyleSheet.absoluteFill} pointerEvents="none">
     <View style={[styles.reflectionStrip, { left: "15%", width: 30 }]} />
     <View style={[styles.reflectionStrip, { left: "45%", width: 15 }]} />
   </View>
 );
 
-export function QuestionCard({
+export const QuestionCard = memo(function QuestionCard({
   question,
   onPress,
   index = 0,
@@ -38,66 +34,67 @@ export function QuestionCard({
 }: QuestionCardProps) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const handleFeedbackPress = () => {
-    haptics.medium();
+  const handleFeedbackPress = useCallback(() => {
     navigation.navigate("SessionResult", {
       questionId: question.id,
       isCorrect: true,
       score: 85,
     });
-  };
+  }, [navigation, question.id]);
 
-  const handlePress = () => {
-    haptics.light();
+  const handlePress = useCallback(() => {
     onPress?.();
-  };
+  }, [onPress]);
 
-  // Staggering logic
-  const offsets = ["5%", "15%", "35%", "30%", "25%", "20%"];
-  const marginLeft = offsets[index % offsets.length];
+  // Staggering logic (Zig-zag pattern)
+  const marginLeft = useMemo(() => {
+    const offsets = ["5%", "15%", "35%", "30%", "25%", "20%"];
+    return offsets[index % offsets.length];
+  }, [index]);
 
   const isCompleted = index === 0;
   const isCurrent = index === 1;
   const isLocked = index > 1;
 
-  const variant = isCompleted
-    ? {
+  const variant = useMemo(() => {
+    if (isCompleted) {
+      return {
         pillBg: colors.cardGreen,
         circleBg: colors.cardGreenDark,
         shadow: colors.cardGreenDarker,
         textColor: palette.textDark,
         logoBg: palette.white,
-      }
-    : isCurrent
-      ? {
-          pillBg: colors.cardOrange,
-          circleBg: palette.cardYellow,
-          shadow: palette.badgeGold,
-          textColor: palette.textDark,
-          logoBg: palette.white,
-        }
-      : {
-          pillBg: palette.gray20,
-          circleBg: palette.gray30,
-          shadow: palette.gray40,
-          textColor: palette.gray70,
-          logoBg: palette.gray30,
-        };
+      };
+    }
+    if (isCurrent) {
+      return {
+        pillBg: colors.cardOrange,
+        circleBg: palette.cardYellow,
+        shadow: palette.badgeGold,
+        textColor: palette.textDark,
+        logoBg: palette.white,
+      };
+    }
+    return {
+      pillBg: palette.gray20,
+      circleBg: palette.gray30,
+      shadow: palette.gray40,
+      textColor: palette.gray70,
+      logoBg: palette.gray30,
+    };
+  }, [isCompleted, isCurrent]);
 
   return (
-    <View style={styles.outerContainer}>
+    <View style={[styles.outerContainer, isSelected && { zIndex: 100 }]}>
       <Animated.View
         entering={FadeInDown.delay(index * 100).duration(400)}
-        style={[styles.animatedWrapper, { marginLeft }]}
+        style={[styles.animatedWrapper, { marginLeft: marginLeft as DimensionValue }]}
       >
         <TouchableOpacity
           style={styles.container}
           activeOpacity={0.9}
           onPress={handlePress}
           disabled={isLocked}
-          accessibilityRole="button"
-          accessibilityLabel={`${question.companyName}, Question ${question.questionNumber}. ${isLocked ? "Locked" : isCompleted ? "Completed" : "Current"}`}
-          accessibilityState={{ disabled: isLocked, selected: isSelected }}
         >
           <View style={[styles.pillContainer, { backgroundColor: variant.shadow }]}>
             <View style={[styles.pillInner, { backgroundColor: variant.pillBg }]}>
@@ -187,7 +184,6 @@ export function QuestionCard({
               fullWidth
               style={styles.actionButton}
               onPress={handleFeedbackPress}
-              accessibilityLabel="View feedback for this question"
             />
 
             <GradientButton
@@ -200,8 +196,6 @@ export function QuestionCard({
               size="small"
               fullWidth
               style={styles.actionButton}
-              accessibilityLabel="AI vs AI listen mode"
-              accessibilityHint="Listen to an AI-generated interview response"
             />
           </View>
           <View style={styles.expandedFooter}>
@@ -219,7 +213,7 @@ export function QuestionCard({
       )}
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   outerContainer: {
@@ -337,7 +331,7 @@ const styles = StyleSheet.create({
   },
   expandedContainer: {
     marginTop: -10,
-    zIndex: 0,
+    zIndex: 20,
     width: "100%",
   },
   triangle: {

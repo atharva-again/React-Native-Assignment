@@ -1,40 +1,42 @@
 {
   "questionId": "q1",
-  "questionText": "API latency is variable & app is sluggish. How do you design UI safely?",
-  "companyName": "PhonePe",
-  "companyLogoUrl": "https://download.logo.wine/logo/PhonePe/PhonePe-Logo.wine.png",
+  "questionText": "API latency is variable & app is sluggish, how do you design UI safely?",
+  "companyName": "NVIDIA",
+  "companyLogoUrl": "https://upload.wikimedia.org/wikipedia/sco/2/21/Nvidia_logo.svg",
   "smartSummary": {
     "whatWorkedWell": [
       "Clearly explained the importance of optimistic UI updates to reduce perceived latency.",
       "Identified critical paths where loading states are better than skeleton screens.",
-      "Suggested a robust retry mechanism with exponential backoff for failed requests."
+      "Suggested a robust retry mechanism with exponential backoff for failed requests.",
+      "Demonstrated a strong understanding of how to handle race conditions in data fetching."
     ],
     "overallTakeaways": [
       "Focus on 'perceived performance' rather than just technical metrics.",
       "Always consider the edge cases of slow or intermittent network connectivity.",
-      "Good use of technical terminology like 'throttling' and 'debouncing' in context."
+      "Good use of technical terminology like 'throttling' and 'debouncing' in context.",
+      "Strong architectural approach to state management during asynchronous operations."
     ]
   },
   "keyMoments": [
     {
-      "timestamp": "00:45",
-      "description": "Solid explanation of Optimistic UI patterns.",
+      "timestamp": "00:37",
+      "description": "Correctly explained how public/private keys enable secure data transmission.",
       "type": "positive"
     },
     {
-      "timestamp": "01:37",
-      "description": "Suggested using skeleton loaders for initial page load.",
+      "timestamp": "01:03",
+      "description": "Clearly articulated that passwords can be easily compromised without encryption.",
       "type": "positive"
     },
     {
-      "timestamp": "02:15",
-      "description": "Initially struggled to explain the difference between throttling and debouncing.",
+      "timestamp": "01:40",
+      "description": "Accurately described the handshake process as fundamental to establishing security",
+      "type": "positive"
+    },
+    {
+      "timestamp": "02:28",
+      "description": "Struggled to name other security guarantees beyond confidentiality when prompted",
       "type": "negative"
-    },
-    {
-      "timestamp": "03:50",
-      "description": "Excellent summary of error handling strategies for mobile apps.",
-      "type": "positive"
     }
   ],
   "audioDurationSeconds": 312

@@ -5,7 +5,6 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import * as Haptics from "expo-haptics";
 import { Image } from "expo-image";
 import React, { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -19,10 +18,12 @@ import type { Question } from "@/types";
 export interface QuestionBottomSheetProps {
   question: Question | null;
   onClose: () => void;
+  onChange?: (index: number) => void;
+  backdropComponent?: (props: BottomSheetBackdropProps) => React.ReactElement;
 }
 
 export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomSheetProps>(
-  ({ question, onClose }, ref) => {
+  ({ question, onClose, onChange, backdropComponent }, ref) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const snapPoints = useMemo(() => ["50%", "65%"], []);
 
@@ -35,7 +36,6 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
 
     const handleFeedbackPress = () => {
       if (!question) return;
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       onClose();
       navigation.navigate("SessionResult", {
         questionId: question.id,
@@ -53,10 +53,10 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
         snapPoints={snapPoints}
         enablePanDownToClose
         onClose={onClose}
-        backdropComponent={renderBackdrop}
+        onChange={onChange}
+        backdropComponent={backdropComponent ?? renderBackdrop}
         backgroundStyle={styles.background}
         handleIndicatorStyle={styles.indicator}
-        accessibilityLabel="Question details bottom sheet"
       >
         <BottomSheetView style={styles.content}>
           <View style={styles.header}>
@@ -66,7 +66,6 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
               contentFit="contain"
               cachePolicy="memory-disk"
               transition={200}
-              accessibilityLabel={`${question.companyName} logo`}
             />
             <Text variant="s" weight="medium" color={colors.textSecondary}>
               Asked by {question.companyName}
@@ -88,19 +87,13 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
           </View>
 
           <View style={styles.buttonContainer}>
-            <Button
-              title="FEEDBACK"
-              onPress={handleFeedbackPress}
-              style={styles.button}
-              accessibilityLabel={`Open feedback for question ${question.questionNumber}`}
-            />
+            <Button title="FEEDBACK" onPress={handleFeedbackPress} style={styles.button} />
             <Button
               title="AI VS AI (LISTEN)"
               variant="disabled"
               disabled
               onPress={() => {}}
               style={styles.button}
-              accessibilityLabel={`AI versus AI listen mode for question ${question.questionNumber}`}
             />
           </View>
 
