@@ -1,0 +1,101 @@
+import { useState } from "react";
+import { Platform, StyleSheet, TextInput, type TextInputProps, View } from "react-native";
+import { colors } from "@/theme/colors";
+import { spacing } from "@/theme/spacing";
+import { typography } from "@/theme/typography";
+import { Text } from "./text";
+
+export interface InputProps extends TextInputProps {
+  label?: string;
+  error?: boolean;
+  errorText?: string;
+  disabled?: boolean;
+}
+
+export function Input({
+  label,
+  error,
+  errorText,
+  disabled,
+  style,
+  onFocus,
+  onBlur,
+  ...props
+}: InputProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = (e: Parameters<NonNullable<TextInputProps["onFocus"]>>[0]) => {
+    setIsFocused(true);
+    onFocus?.(e);
+  };
+
+  const handleBlur = (e: Parameters<NonNullable<TextInputProps["onBlur"]>>[0]) => {
+    setIsFocused(false);
+    onBlur?.(e);
+  };
+
+  const getBorderColor = () => {
+    if (error) return colors.error;
+    if (isFocused) return colors.borderFocused;
+    return colors.border;
+  };
+
+  return (
+    <View style={styles.container}>
+      {label && (
+        <Text
+          variant="s"
+          weight="medium"
+          color={disabled ? colors.textDisabled : colors.textPrimary}
+          style={styles.label}
+        >
+          {label}
+        </Text>
+      )}
+      <TextInput
+        style={[
+          styles.input,
+          {
+            borderColor: getBorderColor(),
+            color: disabled ? colors.textDisabled : colors.textPrimary,
+            backgroundColor: disabled ? colors.backgroundSecondary : colors.background,
+          },
+          style,
+        ]}
+        placeholderTextColor={colors.textDisabled}
+        editable={!disabled}
+        accessibilityLabel={props.accessibilityLabel ?? label ?? props.placeholder}
+        accessibilityState={{ disabled: !!disabled }}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...props}
+      />
+      {error && errorText && (
+        <Text variant="xs" color={colors.error} style={styles.errorText}>
+          {errorText}
+        </Text>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    gap: spacing.xs,
+  },
+  label: {
+    marginBottom: spacing.xxs,
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: spacing.inputRadius,
+    paddingHorizontal: spacing.m,
+    paddingVertical: Platform.OS === "ios" ? spacing.m : spacing.s,
+    fontSize: typography.sizes.m,
+    fontFamily: typography.fonts.inter.normal,
+  },
+  errorText: {
+    marginTop: spacing.xxs,
+  },
+});
