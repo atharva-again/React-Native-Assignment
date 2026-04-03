@@ -1,5 +1,13 @@
 # Ready! — React Native Take-Home Assignment
 
+## Important Submission Related Links
+
+- YouTube Video showcasing the app: https://youtube.com/shorts/Kra1CsYqDSU
+
+- Download the APK from: https://expo.dev/accounts/atharva-again/projects/readyai-assignment/builds/3f3ac01c-ab7b-4e1d-9715-75d666c31ef0
+
+- Notes.md at: https://github.com/atharva-again/React-Native-Assignment/blob/main/NOTES.md
+
 Welcome! This is your take-home assignment for the **React Native Engineer** role at [Grapevine](https://grapevine.in).
 
 You will be building **Ready!** — an AI-powered interview practice app — from a clean Expo base. The goal is to assess your ability to build production-quality React Native screens with attention to UI fidelity, code architecture, and TypeScript correctness.
