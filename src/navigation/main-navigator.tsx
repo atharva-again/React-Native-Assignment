@@ -1,11 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, View } from "react-native";
+import { type BottomTabBarProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { HomeScreen } from "@/features/home/screens/home-screen";
 import { SettingsScreen } from "@/features/settings/screens/settings-screen";
 import type { MainTabParamList } from "@/navigation/types";
-import { colors } from "@/theme/colors";
+import { colors, palette } from "@/theme/colors";
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -19,62 +20,189 @@ const TabIcon = ({
   color: string;
 }) => {
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: withSpring(focused ? 1.2 : 1) }],
+    transform: [{ scale: withSpring(focused ? 1.1 : 1) }],
   }));
 
   return (
     <Animated.View style={animatedStyle}>
-      <Ionicons name={name} size={24} color={color} />
+      <Ionicons name={name} size={28} color={color} />
     </Animated.View>
   );
 };
 
 const StoreTab = () => (
   <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <Text>Store Tab</Text>
+    <Text>Store Tab </Text>
   </View>
 );
+
+function CustomTabBar({ state, navigation }: BottomTabBarProps) {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <View style={[styles.tabBarContainer, { bottom: insets.bottom + 25 }]}>
+      {/* Main Pill: Home and Settings */}
+      <View style={styles.mainOuterPill}>
+        <View style={styles.mainInnerPill}>
+          {state.routes.map((route, index) => {
+            if (route.name === "Store") return null;
+
+            const isFocused = state.index === index;
+
+            const onPress = () => {
+              const event = navigation.emit({
+                type: "tabPress",
+                target: route.key,
+                canPreventDefault: true,
+              });
+
+              if (!isFocused && !event.defaultPrevented) {
+                navigation.navigate(route.name);
+              }
+            };
+
+            let iconName: keyof typeof Ionicons.glyphMap = "home";
+            if (route.name === "Home") {
+              iconName = isFocused ? "home" : "home-outline";
+            } else if (route.name === "Settings") {
+              iconName = isFocused ? "easel" : "easel-outline";
+            }
+
+            return (
+              <TouchableOpacity
+                key={route.key}
+                onPress={onPress}
+                style={styles.tabButton}
+                activeOpacity={0.7}
+              >
+                <TabIcon
+                  name={iconName}
+                  focused={isFocused}
+                  color={isFocused ? colors.primary : colors.textSecondary}
+                />
+                <Text
+                  style={[
+                    styles.tabLabel,
+                    { color: isFocused ? colors.primary : colors.textSecondary },
+                  ]}
+                >
+                  {route.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+
+      {/* Store Button */}
+      {state.routes.map((route) => {
+        if (route.name !== "Store") return null;
+
+        const onPress = () => {
+          navigation.navigate(route.name);
+        };
+
+        return (
+          <TouchableOpacity
+            key={route.key}
+            onPress={onPress}
+            style={styles.storeButton}
+            activeOpacity={0.8}
+          >
+            {/* Outer Ring (thicker at bottom) */}
+            <View style={styles.storeOuterRing}>
+              {/* Inner Circle (the button itself) */}
+              <View style={styles.storeInnerCircle}>
+                <Ionicons name="bag-handle" size={24} color="#1A2B3C" />
+                <Text style={styles.storeLabelInside}>Store</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
+}
 
 export function MainNavigator() {
   return (
     <Tab.Navigator
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textSecondary,
-        tabBarStyle: {
-          borderTopColor: colors.border,
-          elevation: 0,
-          shadowOpacity: 0,
-        },
+        headerShown: false,
       }}
     >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: (props) => (
-            <TabIcon name={props.focused ? "home" : "home-outline"} {...props} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Store"
-        component={StoreTab}
-        options={{
-          tabBarIcon: (props) => (
-            <TabIcon name={props.focused ? "cart" : "cart-outline"} {...props} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: (props) => (
-            <TabIcon name={props.focused ? "settings" : "settings-outline"} {...props} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="Store" component={StoreTab} />
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  mainOuterPill: {
+    backgroundColor: "#E5E7EB",
+    borderRadius: 40,
+    height: 78,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: 1,
+    paddingHorizontal: 1,
+  },
+  mainInnerPill: {
+    flexDirection: "row",
+    backgroundColor: palette.white,
+    borderRadius: 39,
+    paddingHorizontal: 16,
+    height: 72,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tabButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 85,
+  },
+  tabLabel: {
+    fontSize: 12,
+    marginTop: 2,
+    fontWeight: "500",
+  },
+  storeButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 15,
+  },
+  storeOuterRing: {
+    width: 78,
+    height: 78,
+    borderRadius: 39,
+    backgroundColor: "#A0D8FF",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: 1,
+  },
+  storeInnerCircle: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: "#E0F2FF",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  storeLabelInside: {
+    fontSize: 12,
+    marginTop: 1,
+    fontWeight: "600",
+    color: "#374151",
+  },
+});
