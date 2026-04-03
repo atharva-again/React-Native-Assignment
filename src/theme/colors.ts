@@ -1,7 +1,7 @@
 /**
  * ReadyU Brand Color Palette
  *
- * Use these tokens throughout your components.
+ * Use these color tokens throughout your components.
  * Do NOT use hardcoded hex values in component files.
  */
 
@@ -34,6 +34,21 @@ export const palette = {
   gray80: "#374151",
   gray90: "#1F2937",
 
+  // Figma card colors
+  cardGreen: "#D8F7C2",
+  cardGreenDark: "#94DE5F",
+  cardGreenDarker: "#79D634",
+  cardOrange: "#FFF0BF",
+  cardYellow: "#FFEAA6",
+  cardGray: "#EFEFF4",
+  bannerYellow: "#FFF6D9",
+  badgeGold: "#BF9C26",
+  iconGreen: "#57D997",
+  iconBlue: "#0081FB",
+  iconBlueLight: "#E5F2FF",
+  iconBlueBorder: "#B2D9FF",
+  textDark: "#2C2C2E",
+
   // Utility
   white: "#FFFFFF",
   black: "#000000",
@@ -58,6 +73,7 @@ export const colors = {
   textDisabled: palette.gray40,
   textInverse: palette.white,
   textLink: palette.orange50,
+  textDark: palette.textDark,
 
   // Border
   border: palette.gray30,
@@ -72,12 +88,26 @@ export const colors = {
   // Cards
   cardBackground: palette.white,
   cardBorder: palette.gray30,
+  cardGreen: palette.cardGreen,
+  cardGreenDark: palette.cardGreenDark,
+  cardGreenDarker: palette.cardGreenDarker,
+  cardOrange: palette.cardOrange,
+  cardYellow: palette.cardYellow,
+  cardGray: palette.cardGray,
+  bannerYellow: palette.bannerYellow,
+  badgeGold: palette.badgeGold,
 
   // Button
   buttonPrimary: palette.orange50,
   buttonPrimaryText: palette.white,
   buttonDisabled: palette.gray30,
   buttonDisabledText: palette.gray50,
+
+  // Icons
+  iconGreen: palette.iconGreen,
+  iconBlue: palette.iconBlue,
+  iconBlueLight: palette.iconBlueLight,
+  iconBlueBorder: palette.iconBlueBorder,
 } as const;
 
 export type Colors = typeof colors;
