@@ -14,6 +14,7 @@ import type { RootStackParamList } from "@/navigation/types";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import type { Question } from "@/types";
+import { hapticSelect } from "@/utils/haptics";
 
 export interface QuestionBottomSheetProps {
   question: Question | null;
@@ -34,8 +35,9 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
       [],
     );
 
-    const handleFeedbackPress = () => {
+    const handleFeedbackPress = async () => {
       if (!question) return;
+      await hapticSelect();
       onClose();
       navigation.navigate("SessionResult", {
         questionId: question.id,
@@ -57,6 +59,7 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
         backdropComponent={backdropComponent ?? renderBackdrop}
         backgroundStyle={styles.background}
         handleIndicatorStyle={styles.indicator}
+        accessibilityLabel="Question details"
       >
         <BottomSheetView style={styles.content}>
           <View style={styles.header}>
@@ -87,8 +90,19 @@ export const QuestionBottomSheet = React.forwardRef<BottomSheet, QuestionBottomS
           </View>
 
           <View style={styles.buttonContainer}>
-            <Button title="FEEDBACK" onPress={handleFeedbackPress} style={styles.button} />
-            <Button title="AI VS AI (LISTEN)" variant="disabled" disabled style={styles.button} />
+            <Button
+              title="FEEDBACK"
+              onPress={handleFeedbackPress}
+              style={styles.button}
+              accessibilityLabel="View session feedback"
+            />
+            <Button
+              title="AI VS AI (LISTEN)"
+              variant="disabled"
+              disabled
+              style={styles.button}
+              accessibilityLabel="AI versus AI listen, coming soon"
+            />
           </View>
 
           <Text variant="xs" align="center" color={colors.textSecondary} style={styles.socialProof}>

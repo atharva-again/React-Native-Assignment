@@ -26,6 +26,8 @@ const BulletList = memo(({ items, emptyMessage }: { items: string[]; emptyMessag
           key={item}
           style={styles.bulletItem}
           entering={FadeInDown.delay(index * 100 + 400).duration(400)}
+          accessible
+          accessibilityLabel={item}
         >
           <View style={styles.diamondWrapper}>
             <View style={styles.diamond} />

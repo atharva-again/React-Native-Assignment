@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Modal, Platform, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
+import { hapticTap } from "@/utils/haptics";
 import { formFieldStyles, getFieldBorderColor } from "./form-field";
 import { Text } from "./text";
 
@@ -57,8 +58,13 @@ export function PhoneInput({
       >
         <TouchableOpacity
           style={styles.countryCode}
-          onPress={() => setShowPicker(true)}
+          onPress={async () => {
+            await hapticTap();
+            setShowPicker(true);
+          }}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Select country code"
         >
           <Text variant="m" weight="semiBold" style={styles.countryCodeText}>
             {selected.flag} {selected.code}
@@ -80,6 +86,7 @@ export function PhoneInput({
             onFocus?.();
           }}
           onBlur={() => setIsFocused(false)}
+          accessibilityLabel="Mobile phone number"
         />
       </View>
 
@@ -94,6 +101,8 @@ export function PhoneInput({
           style={styles.modalOverlay}
           activeOpacity={1}
           onPress={() => setShowPicker(false)}
+          accessibilityRole="button"
+          accessibilityLabel="Close country code picker"
         >
           <View style={styles.pickerContainer}>
             {COUNTRY_CODES.map((country) => (
@@ -103,10 +112,14 @@ export function PhoneInput({
                   styles.pickerRow,
                   country.code === selectedCountryCode && styles.pickerRowSelected,
                 ]}
-                onPress={() => {
+                onPress={async () => {
+                  await hapticTap();
                   onCountryCodeChange(country.code);
                   setShowPicker(false);
                 }}
+                accessibilityRole="button"
+                accessibilityLabel={`${country.flag} ${country.label} ${country.code}`}
+                accessibilityState={{ selected: country.code === selectedCountryCode }}
               >
                 <Text
                   variant="m"

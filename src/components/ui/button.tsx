@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { colors, palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
+import { hapticTap } from "@/utils/haptics";
 import { Text } from "./text";
 
 export type ButtonVariant = "primary" | "secondary" | "disabled";
@@ -18,6 +19,7 @@ export interface ButtonProps extends TouchableOpacityProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
+  accessibilityLabel?: string;
 }
 
 export function Button({
@@ -27,6 +29,8 @@ export function Button({
   loading = false,
   disabled,
   style,
+  onPress,
+  accessibilityLabel: customA11yLabel,
   ...props
 }: ButtonProps) {
   const isActuallyDisabled = disabled || loading || variant === "disabled";
@@ -41,11 +45,22 @@ export function Button({
 
   const textStyles: TextStyle[] = [styles[`${activeVariant}Text`]];
 
+  const handlePress = async (e: Parameters<NonNullable<TouchableOpacityProps["onPress"]>>[0]) => {
+    if (!isActuallyDisabled) {
+      await hapticTap();
+    }
+    onPress?.(e);
+  };
+
   return (
     <TouchableOpacity
       style={buttonStyles}
       disabled={isActuallyDisabled}
       activeOpacity={0.8}
+      onPress={handlePress}
+      accessibilityRole="button"
+      accessibilityLabel={customA11yLabel ?? title}
+      accessibilityState={{ disabled: isActuallyDisabled }}
       {...props}
     >
       {loading ? (

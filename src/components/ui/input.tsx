@@ -20,6 +20,7 @@ export function Input({
   style,
   onFocus,
   onBlur,
+  accessibilityLabel: customA11yLabel,
   ...props
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -42,6 +43,7 @@ export function Input({
           weight="medium"
           color={disabled ? colors.textDisabled : colors.textPrimary}
           style={formFieldStyles.label}
+          nativeID={customA11yLabel ? `${customA11yLabel}-label` : undefined}
         >
           {label}
         </Text>
@@ -60,6 +62,9 @@ export function Input({
         editable={!disabled}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        accessibilityLabel={customA11yLabel ?? label}
+        accessibilityRole="text"
+        accessibilityState={{ disabled: !!disabled, busy: false }}
         {...props}
       />
       {error && errorText && (

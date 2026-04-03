@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { memo, useMemo } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { Text } from "@/components/ui/text";
 import { colors, palette } from "@/theme/colors";
@@ -30,6 +30,8 @@ const MomentRow = memo(
     <Animated.View
       style={styles.momentRowContainer}
       entering={FadeInDown.delay(index * 100 + 500).duration(400)}
+      accessible
+      accessibilityLabel={`${moment.timestamp} - ${moment.description}`}
     >
       <View style={styles.momentRow}>
         <Text variant="m" weight="semiBold" color={palette.iconBlue} style={styles.timestamp}>
@@ -56,10 +58,20 @@ export const KeyMomentsTab = memo(function KeyMomentsTab({ sessionResult }: KeyM
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
     >
-      <Animated.View style={styles.audioPlayer} entering={FadeInDown.delay(350).duration(500)}>
-        <View style={styles.playButton}>
+      <Animated.View
+        style={styles.audioPlayer}
+        entering={FadeInDown.delay(350).duration(500)}
+        accessible
+        accessibilityLabel={`Mock interview audio player. Total duration ${formattedTotalDuration}`}
+        accessibilityRole="adjustable"
+      >
+        <TouchableOpacity
+          style={styles.playButton}
+          accessibilityRole="button"
+          accessibilityLabel="Play audio"
+        >
           <Ionicons name="play" size={24} color={palette.white} style={{ marginLeft: 3 }} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.playerInfo}>
           <View style={styles.playerHeader}>
             <Text variant="m" weight="semiBold" color={palette.orange60}>

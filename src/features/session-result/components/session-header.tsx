@@ -6,6 +6,7 @@ import { Text } from "@/components/ui/text";
 import { colors, palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import type { SessionResult } from "@/types";
+import { hapticTap } from "@/utils/haptics";
 
 export interface SessionHeaderProps {
   sessionResult: SessionResult;
@@ -15,7 +16,8 @@ export interface SessionHeaderProps {
 export function SessionHeader({ sessionResult, onClose }: SessionHeaderProps) {
   const insets = useSafeAreaInsets();
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    await hapticTap();
     onClose?.();
   };
 
@@ -24,6 +26,8 @@ export function SessionHeader({ sessionResult, onClose }: SessionHeaderProps) {
       <TouchableOpacity
         style={[styles.closeButton, { top: insets.top + spacing.xs }]}
         onPress={handleClose}
+        accessibilityRole="button"
+        accessibilityLabel="Close session result"
       >
         <View style={styles.closeIconWrapper}>
           <Ionicons name="close" size={24} color={colors.textPrimary} />

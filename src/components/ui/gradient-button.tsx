@@ -12,6 +12,7 @@ import {
 import { colors, palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { typography } from "@/theme/typography";
+import { hapticTap } from "@/utils/haptics";
 
 export interface GradientButtonProps extends TouchableOpacityProps {
   label: string;
@@ -23,6 +24,7 @@ export interface GradientButtonProps extends TouchableOpacityProps {
   shadowColor?: string;
   bottomShadowColor?: string;
   shadowHeight?: number;
+  accessibilityLabel?: string;
 }
 
 export function GradientButton({
@@ -38,11 +40,15 @@ export function GradientButton({
   style,
   disabled,
   onPress,
+  accessibilityLabel: customA11yLabel,
   ...props
 }: GradientButtonProps) {
   const isSmall = size === "small";
 
-  const handlePress = (e: GestureResponderEvent) => {
+  const handlePress = async (e: GestureResponderEvent) => {
+    if (!disabled) {
+      await hapticTap();
+    }
     onPress?.(e);
   };
 
@@ -52,6 +58,7 @@ export function GradientButton({
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={[styles.gradient, isSmall && styles.gradientSmall]}
+      pointerEvents="none"
     >
       {iconName ? <Ionicons name={iconName} size={isSmall ? 18 : 24} color={textColor} /> : null}
       <Text style={[styles.label, { color: textColor }, isSmall && styles.labelSmall]}>
@@ -71,6 +78,9 @@ export function GradientButton({
     style,
   ];
 
+  const accessibilityState = { disabled: !!disabled };
+  const a11yLabel = customA11yLabel ?? label;
+
   if (bottomShadowColor) {
     return (
       <View
@@ -86,6 +96,9 @@ export function GradientButton({
           activeOpacity={0.85}
           disabled={disabled}
           onPress={handlePress}
+          accessibilityRole="button"
+          accessibilityLabel={a11yLabel}
+          accessibilityState={accessibilityState}
           {...props}
         >
           {content}
@@ -100,6 +113,9 @@ export function GradientButton({
       activeOpacity={0.85}
       disabled={disabled}
       onPress={handlePress}
+      accessibilityRole="button"
+      accessibilityLabel={a11yLabel}
+      accessibilityState={accessibilityState}
       {...props}
     >
       {content}

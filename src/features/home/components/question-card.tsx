@@ -11,6 +11,7 @@ import type { RootStackParamList } from "@/navigation/types";
 import { colors, palette } from "@/theme";
 import { spacing } from "@/theme/spacing";
 import type { Question } from "@/types";
+import { hapticSelect, hapticTap } from "@/utils/haptics";
 
 export interface QuestionCardProps {
   question: Question;
@@ -34,7 +35,8 @@ export const QuestionCard = memo(function QuestionCard({
 }: QuestionCardProps) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const handleFeedbackPress = useCallback(() => {
+  const handleFeedbackPress = useCallback(async () => {
+    await hapticSelect();
     navigation.navigate("SessionResult", {
       questionId: question.id,
       isCorrect: true,
@@ -42,7 +44,8 @@ export const QuestionCard = memo(function QuestionCard({
     });
   }, [navigation, question.id]);
 
-  const handlePress = useCallback(() => {
+  const handlePress = useCallback(async () => {
+    await hapticTap();
     onPress?.();
   }, [onPress]);
 
@@ -95,6 +98,9 @@ export const QuestionCard = memo(function QuestionCard({
           activeOpacity={0.9}
           onPress={handlePress}
           disabled={isLocked}
+          accessibilityRole="button"
+          accessibilityLabel={`${question.companyName} question ${question.questionNumber}${isLocked ? ", locked" : ""}`}
+          accessibilityState={{ disabled: isLocked, selected: isSelected }}
         >
           <View style={[styles.pillContainer, { backgroundColor: variant.shadow }]}>
             <View style={[styles.pillInner, { backgroundColor: variant.pillBg }]}>
@@ -184,6 +190,7 @@ export const QuestionCard = memo(function QuestionCard({
               fullWidth
               style={styles.actionButton}
               onPress={handleFeedbackPress}
+              accessibilityLabel={`View feedback for question ${question.questionNumber}`}
             />
 
             <GradientButton
@@ -196,6 +203,8 @@ export const QuestionCard = memo(function QuestionCard({
               size="small"
               fullWidth
               style={styles.actionButton}
+              disabled
+              accessibilityLabel="AI versus AI listen, coming soon"
             />
           </View>
           <View style={styles.expandedFooter}>

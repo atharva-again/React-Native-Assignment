@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Dimensions, StyleSheet, View, Text as RNText } from "react-native";
+import { Dimensions, Text as RNText, StyleSheet, View } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { AuthScreenLayout, GradientButton, Text } from "@/components/ui";
 import type { AuthStackScreenProps } from "@/navigation/types";
@@ -54,12 +54,26 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<"Welcome">) {
           label="Let's go"
           iconName="checkmark-circle-outline"
           onPress={handleContinue}
+          accessibilityLabel="Continue to login"
         />
 
         <Text style={styles.legalText}>
           By continuing, you acknowledge agreeing to our{"\n"}
-          <Text style={styles.legalLink}>terms of service</Text> and{" "}
-          <Text style={styles.legalLink}>privacy policy</Text>
+          <Text
+            style={styles.legalLink}
+            accessibilityRole="link"
+            accessibilityLabel="Terms of service"
+          >
+            terms of service
+          </Text>{" "}
+          and{" "}
+          <Text
+            style={styles.legalLink}
+            accessibilityRole="link"
+            accessibilityLabel="Privacy policy"
+          >
+            privacy policy
+          </Text>
         </Text>
       </Animated.View>
     </AuthScreenLayout>

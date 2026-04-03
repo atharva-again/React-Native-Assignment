@@ -9,6 +9,7 @@ import {
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { typography } from "@/theme/typography";
+import { hapticTap } from "@/utils/haptics";
 
 export interface OtpInputProps {
   length?: number;
@@ -16,6 +17,7 @@ export interface OtpInputProps {
   onChangeValue: (value: string) => void;
   error?: boolean;
   onRef?: (ref: { blur: () => void }) => void;
+  accessibilityLabel?: string;
 }
 
 export function OtpInput({
@@ -24,6 +26,7 @@ export function OtpInput({
   onChangeValue,
   error = false,
   onRef,
+  accessibilityLabel: customA11yLabel,
 }: OtpInputProps) {
   const refs = useRef<(TextInput | null)[]>([]);
   const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -40,12 +43,13 @@ export function OtpInput({
   }, [onRef, blurAll]);
 
   const handleChangeText = useCallback(
-    (text: string, index: number) => {
+    async (text: string, index: number) => {
       if (text.length > 1) {
         const digits = text.replace(/\D/g, "").slice(0, length);
         onChangeValue(digits);
         const nextIndex = Math.min(digits.length, length) - 1;
         refs.current[nextIndex]?.focus();
+        await hapticTap();
         return;
       }
 
@@ -53,6 +57,10 @@ export function OtpInput({
       digits[index] = text;
       const newValue = digits.join("").slice(0, length);
       onChangeValue(newValue);
+
+      if (text.length > 0) {
+        await hapticTap();
+      }
 
       if (text.length > 0 && index < length - 1) {
         refs.current[index + 1]?.focus();
@@ -87,7 +95,7 @@ export function OtpInput({
   const boxes = Array.from({ length }, (_, i) => i);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessible accessibilityLabel={customA11yLabel ?? "OTP input"}>
       {boxes.map((index) => {
         const isFocused = focusedIndex === index;
         const hasValue = paddedValue[index] !== "";
@@ -112,6 +120,9 @@ export function OtpInput({
             onFocus={() => handleFocus(index)}
             placeholderTextColor={colors.textDisabled}
             textAlign="center"
+            accessibilityLabel={`Digit ${index + 1}`}
+            accessibilityRole="text"
+            accessibilityState={{ selected: isFocused }}
           />
         );
       })}

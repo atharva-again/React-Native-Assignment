@@ -9,6 +9,7 @@ import {
 import { AuthScreenLayout, GradientButton, OtpInput, PhoneInput, Text } from "@/components/ui";
 import type { AuthStackScreenProps } from "@/navigation/types";
 import { colors, spacing, typography } from "@/theme";
+import { hapticTap } from "@/utils/haptics";
 
 const PHONE_MIN_LENGTH = 10;
 const OTP_LENGTH = 6;
@@ -145,9 +146,19 @@ function LoginScreen({ navigation }: AuthStackScreenProps<"Login">) {
             />
             {buttonState !== "get-otp" && (
               <TouchableOpacity
-                onPress={resendTimer === 0 ? handleResend : undefined}
+                onPress={async () => {
+                  if (resendTimer === 0) {
+                    await hapticTap();
+                    handleResend();
+                  }
+                }}
                 style={styles.resendButton}
                 disabled={resendTimer > 0}
+                accessibilityRole="button"
+                accessibilityLabel={
+                  resendTimer > 0 ? `Resend OTP in ${resendTimer} seconds` : "Resend OTP"
+                }
+                accessibilityState={{ disabled: resendTimer > 0 }}
               >
                 <Text variant="s" weight="semiBold" style={styles.resendText}>
                   {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}

@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "@/components/ui/text";
 import { colors, palette } from "@/theme";
 import { spacing } from "@/theme/spacing";
+import { hapticTap } from "@/utils/haptics";
 
 export interface PracticeSetCardProps {
   title: string;
@@ -15,8 +16,13 @@ export function PracticeSetCard({ title, onPress }: PracticeSetCardProps) {
       <TouchableOpacity
         style={styles.container}
         activeOpacity={0.9}
-        onPress={onPress}
+        onPress={async () => {
+          await hapticTap();
+          onPress?.();
+        }}
         hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        accessibilityRole="button"
+        accessibilityLabel={`Practice set: ${title}. Tap to expand or collapse.`}
       >
         <View style={styles.leftContent}>
           <View style={styles.iconContainer}>

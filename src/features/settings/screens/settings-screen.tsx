@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { AnimatedScreen, GradientButton, IconButton, ScreenContainer, Text } from "@/components/ui";
 import { colors, palette, spacing } from "@/theme";
+import { hapticTap } from "@/utils/haptics";
 
 export function SettingsScreen() {
   const navigation = useNavigation();
@@ -63,6 +64,7 @@ export function SettingsScreen() {
               textColor={palette.orange70}
               fullWidth
               style={styles.trialButton}
+              accessibilityLabel="Start 3 days free trial for 1 rupee"
             />
           </View>
 
@@ -76,7 +78,12 @@ export function SettingsScreen() {
                 New update available
               </Text>
             </View>
-            <TouchableOpacity style={styles.downloadButton}>
+            <TouchableOpacity
+              style={styles.downloadButton}
+              onPress={async () => await hapticTap()}
+              accessibilityRole="button"
+              accessibilityLabel="Download update"
+            >
               <Ionicons name="download-outline" size={20} color={colors.iconGreen} />
             </TouchableOpacity>
           </View>
@@ -146,7 +153,12 @@ interface MenuItemProps {
 
 function MenuItem({ icon, title }: MenuItemProps) {
   return (
-    <TouchableOpacity style={styles.menuItem}>
+    <TouchableOpacity
+      style={styles.menuItem}
+      onPress={async () => await hapticTap()}
+      accessibilityRole="button"
+      accessibilityLabel={title}
+    >
       <View style={styles.menuItemLeft}>
         <Ionicons name={icon} size={20} color={colors.textSecondary} />
         <Text variant="m" style={styles.menuItemTitle}>

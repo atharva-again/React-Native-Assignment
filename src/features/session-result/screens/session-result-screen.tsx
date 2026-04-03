@@ -7,6 +7,7 @@ import { Text } from "@/components/ui/text";
 import type { RootStackParamList } from "@/navigation/types";
 import { colors, palette, spacing } from "@/theme";
 import type { SessionResult } from "@/types";
+import { hapticTap } from "@/utils/haptics";
 import { loadSessionResult } from "@/utils/mock-data";
 import { KeyMomentsTab } from "../components/key-moments-tab";
 import { SessionHeader } from "../components/session-header";
@@ -26,8 +27,9 @@ export function SessionResultScreen({
     navigation.goBack();
   };
 
-  const handleTabPress = (tab: TabType) => {
+  const handleTabPress = async (tab: TabType) => {
     if (activeTab !== tab) {
+      await hapticTap();
       setActiveTab(tab);
     }
   };
@@ -39,10 +41,14 @@ export function SessionResultScreen({
       </Animated.View>
 
       <Animated.View style={styles.sheet} entering={FadeInDown.duration(500).delay(100)}>
-        <View style={styles.tabBar}>
+        <View style={styles.tabBar} role="tablist">
           <TouchableOpacity
             style={[styles.tabItem, activeTab === "summary" && styles.activeTabItem]}
             onPress={() => handleTabPress("summary")}
+            role="tab"
+            accessibilityRole="tab"
+            accessibilityLabel="Smart summary tab"
+            accessibilityState={{ selected: activeTab === "summary" }}
           >
             <Text
               variant="m"
@@ -56,6 +62,10 @@ export function SessionResultScreen({
           <TouchableOpacity
             style={[styles.tabItem, activeTab === "highlights" && styles.activeTabItem]}
             onPress={() => handleTabPress("highlights")}
+            role="tab"
+            accessibilityRole="tab"
+            accessibilityLabel="Key moments tab"
+            accessibilityState={{ selected: activeTab === "highlights" }}
           >
             <Text
               variant="m"
