@@ -1,15 +1,18 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import {
+  type GestureResponderEvent,
   Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   type TouchableOpacityProps,
+  View,
 } from "react-native";
 import { palette } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { typography } from "@/theme/typography";
+import { haptics } from "@/utils/haptics";
 
 export interface GradientButtonProps extends TouchableOpacityProps {
   label: string;
@@ -17,6 +20,10 @@ export interface GradientButtonProps extends TouchableOpacityProps {
   colors?: readonly [string, string, ...string[]];
   textColor?: string;
   fullWidth?: boolean;
+  size?: "small" | "medium" | "large";
+  shadowColor?: string;
+  bottomShadowColor?: string;
+  shadowHeight?: number;
 }
 
 export function GradientButton({
@@ -25,47 +32,107 @@ export function GradientButton({
   colors: gradientColors = ["#FF7800", "#FF5000"],
   textColor = palette.white,
   fullWidth = false,
+  size = "large",
+  shadowColor,
+  bottomShadowColor,
+  shadowHeight = 4,
   style,
   disabled,
+  onPress,
   accessibilityLabel,
   ...props
 }: GradientButtonProps) {
+  const isSmall = size === "small";
+
+  const handlePress = (e: GestureResponderEvent) => {
+    haptics.medium();
+    onPress?.(e);
+  };
+
+  const content = (
+    <LinearGradient
+      colors={gradientColors}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+      style={[styles.gradient, isSmall && styles.gradientSmall]}
+    >
+      {iconName ? <Ionicons name={iconName} size={isSmall ? 18 : 24} color={textColor} /> : null}
+      <Text style={[styles.label, { color: textColor }, isSmall && styles.labelSmall]}>
+        {label}
+      </Text>
+    </LinearGradient>
+  );
+
+  const buttonStyle = [
+    styles.button,
+    fullWidth && styles.fullWidth,
+    {
+      shadowColor:
+        shadowColor ?? (gradientColors[0] === palette.white ? "transparent" : palette.orange70),
+    },
+    style,
+  ];
+
+  if (bottomShadowColor) {
+    return (
+      <View
+        style={[
+          styles.shadowWrapper,
+          fullWidth && styles.fullWidth,
+          style,
+          { backgroundColor: bottomShadowColor, paddingBottom: shadowHeight },
+        ]}
+      >
+        <TouchableOpacity
+          style={[styles.button, styles.fullWidth]}
+          activeOpacity={0.85}
+          disabled={disabled}
+          accessibilityRole="button"
+          accessibilityLabel={accessibilityLabel ?? label}
+          accessibilityState={{ disabled: !!disabled }}
+          onPress={handlePress}
+          {...props}
+        >
+          {content}
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
     <TouchableOpacity
-      style={[styles.button, fullWidth && styles.fullWidth, style]}
+      style={buttonStyle}
       activeOpacity={0.85}
       disabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={{ disabled: !!disabled }}
+      onPress={handlePress}
       {...props}
     >
-      <LinearGradient
-        colors={gradientColors}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={styles.gradient}
-      >
-        {iconName ? <Ionicons name={iconName} size={24} color={textColor} /> : null}
-        <Text style={[styles.label, { color: textColor }]}>{label}</Text>
-      </LinearGradient>
+      {content}
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
+  shadowWrapper: {
+    borderRadius: spacing.cardRadius,
+    alignSelf: "center",
+    width: "90%",
+  },
   button: {
     borderRadius: spacing.cardRadius,
     alignSelf: "center",
     width: "90%",
     ...Platform.select({
       ios: {
-        shadowColor: palette.orange70,
         shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.6,
+        shadowOpacity: 0.4,
         shadowRadius: 8,
       },
       android: {
-        elevation: 6,
+        elevation: 4,
       },
     }),
   },
@@ -81,9 +148,17 @@ const styles = StyleSheet.create({
     gap: spacing.s,
     borderRadius: spacing.cardRadius,
   },
+  gradientSmall: {
+    paddingVertical: spacing.s,
+    paddingHorizontal: spacing.m,
+    gap: spacing.xs,
+  },
   label: {
     fontFamily: typography.fonts.inter.semiBold,
     fontSize: typography.sizes.l,
     color: palette.white,
+  },
+  labelSmall: {
+    fontSize: typography.sizes.m,
   },
 });
