@@ -1,8 +1,8 @@
-import { Image } from "expo-image";
 import { useCallback } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
+import Animated, { FadeInUp } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { GradientButton } from "@/components/ui";
+import { GradientButton, Text } from "@/components/ui";
 import type { AuthStackScreenProps } from "@/navigation/types";
 import { colors, spacing, typography } from "@/theme";
 
@@ -20,31 +20,41 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<"Welcome">) {
       <View style={{ height: Math.max(insets.top, spacing.m) }} />
 
       <View style={styles.logoRow}>
-        <Image
+        <Animated.Image
           source={require("../../../../assets/icon.png")}
           style={styles.logoImage}
-          contentFit="contain"
+          resizeMode="contain"
+          sharedTransitionTag="ready-logo"
         />
       </View>
 
-      <View style={styles.illustrationContainer}>
-        <Image
+      <Animated.View
+        entering={FadeInUp.delay(200).duration(800).springify()}
+        style={styles.illustrationContainer}
+      >
+        <Animated.Image
           source={require("../../../../assets/welcome_illustration.png")}
           style={styles.illustration}
-          contentFit="contain"
+          resizeMode="contain"
         />
-      </View>
+      </Animated.View>
 
-      <View style={styles.headlineContainer}>
+      <Animated.View
+        entering={FadeInUp.delay(400).duration(800).springify()}
+        style={styles.headlineContainer}
+      >
         <Text style={styles.headline}>
           Practice Top Interview{"\n"}
           Questions <Text style={{ color: colors.primary }}>with AI</Text>
         </Text>
-      </View>
+      </Animated.View>
 
       <View style={styles.spacer} />
 
-      <View style={styles.buttonContainer}>
+      <Animated.View
+        entering={FadeInUp.delay(600).duration(800).springify()}
+        style={styles.buttonContainer}
+      >
         <GradientButton
           label="Let's go"
           iconName="checkmark-circle-outline"
@@ -56,7 +66,7 @@ function WelcomeScreen({ navigation }: AuthStackScreenProps<"Welcome">) {
           <Text style={styles.legalLink}>terms of service</Text> and{" "}
           <Text style={styles.legalLink}>privacy policy</Text>
         </Text>
-      </View>
+      </Animated.View>
 
       <View style={{ height: Math.max(insets.bottom, spacing.m) }} />
     </View>
