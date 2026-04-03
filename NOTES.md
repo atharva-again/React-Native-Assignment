@@ -7,3 +7,5 @@
 - The figma design was quite good and detailed. It was easier to develop the actual app by giving the LLM svg and png of the designs. I was actually able to ask the LLMs to extract the avatars from svgs and create pngs of them to be used.
 
 - The assessts folder contained logos and stuff from tal so I took liberty and changed them to better suit our current app.
+
+- In the Figma design's, the line "X users completed question x today" came only once below currently available question. I thought it would be a better motivation if the user could see that stat for every question, so I intergated it with question card menu.
