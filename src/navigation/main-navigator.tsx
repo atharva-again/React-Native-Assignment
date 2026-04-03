@@ -39,6 +39,12 @@ const StoreTab = () => (
 function CustomTabBar({ state, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
 
+  // Hide tab bar on Settings screen
+  const currentRouteName = state.routes[state.index].name;
+  if (currentRouteName === "Settings") {
+    return null;
+  }
+
   return (
     <View style={[styles.tabBarContainer, { bottom: insets.bottom + 25 }]}>
       {/* Main Pill: Home and Settings */}

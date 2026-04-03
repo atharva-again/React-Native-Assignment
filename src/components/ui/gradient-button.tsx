@@ -15,6 +15,7 @@ export interface GradientButtonProps extends TouchableOpacityProps {
   label: string;
   iconName?: React.ComponentProps<typeof Ionicons>["name"];
   colors?: readonly [string, string, ...string[]];
+  textColor?: string;
   fullWidth?: boolean;
 }
 
@@ -22,6 +23,7 @@ export function GradientButton({
   label,
   iconName,
   colors: gradientColors = ["#FF7800", "#FF5000"],
+  textColor = palette.white,
   fullWidth = false,
   style,
   disabled,
@@ -43,8 +45,8 @@ export function GradientButton({
         end={{ x: 0, y: 1 }}
         style={styles.gradient}
       >
-        {iconName ? <Ionicons name={iconName} size={24} color={palette.white} /> : null}
-        <Text style={styles.label}>{label}</Text>
+        {iconName ? <Ionicons name={iconName} size={24} color={textColor} /> : null}
+        <Text style={[styles.label, { color: textColor }]}>{label}</Text>
       </LinearGradient>
     </TouchableOpacity>
   );
