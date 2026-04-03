@@ -29,6 +29,3 @@ ios/
 
 # Sisyphus planning artifacts
 .sisyphus/
-
-# screens folder
-screens/ 
